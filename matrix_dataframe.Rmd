@@ -1,0 +1,50 @@
+---
+title: "Matrices and Data Frame"
+author: "Adediran Ifeoluwa"
+date: "January 28, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE) 
+```
+
+## Matrices and Data Frame Illustration
+Create a matrix for the accident record called accident_matrix
+Create a data frame version of accident matrix and name it accident_dataframe
+
+``` 
+
+snames <- c(
+"Braund, Mr. Owen Harris" = 22,
+"Cumings, Mrs. John Bradley (Florence Briggs Thayer)" = 38,
+"Heikkinen, Miss. Laina" = 26,
+"Futrelle, Mrs. Jacques Heath (Lily May Peel)" = 35,
+"Allen, Mr. William Henry" = 35,
+"Moran, Mr. James" = NA,
+"McCarthy, Mr. Timothy J" = 54,
+"Palsson, Master. Gosta Leonard" = 2,
+"Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)" = 27,
+"Nasser, Mrs. Nicholas (Adele Achem)" = 14,
+"Sandstrom, Miss. Marguerite Rut" = 4,
+"Bonnell, Miss. Elizabeth" = 58,
+"Saundercock, Mr. William Henry" = 20,
+"Andersson, Mr. Anders Johan" = 39,
+"Vestrom, Miss. Hulda Amanda Adolfina" = 14,
+"Hewlett, Mrs. (Mary D Kingcome)" = 55,
+"Rice, Master. Eugene" = 2,
+"Williams, Mr. Charles Eugene" = NA,
+"Vander Planke, Mrs. Julius (Emelia Maria Vandemoortele)" = 31,
+"Masselmani, Mrs. Fatima" = NA
+)
+
+accident_matrix <- matrix(c(0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0), 20, 1)
+cbind(snames, accident_matrix)
+
+
+accident_dataframe <- data.frame(snames, accident_matrix)
+cnames <- c("Passenger - Name, Age", "Survived")
+colnames(accident_dataframe) <- cnames
+
+
+```

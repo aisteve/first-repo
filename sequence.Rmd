@@ -1,0 +1,20 @@
+---
+title: "Sequence Number"
+author: "Adediran Ifeoluwa"
+date: "January 28, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Sequence Number Illustration
+
+Generate a sequence number from 1 to 10 and assign to passenger
+Then get the length of the passenger
+
+```
+passenger <- 1:10
+length(passenger)
+``` 

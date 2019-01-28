@@ -1,0 +1,47 @@
+---
+title: "Missing Values"
+author: "Adediran Ifeoluwa"
+date: "January 28, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Missing Values Illustration
+
+Look for values in survived2 that is greater than 0 and assign it to alive
+Display alive
+Get records of passenger that contains NA in their age
+
+``` 
+survived2 <- c(0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0)
+alive <- survived2[survived2 > 0]
+alive
+
+snames <- c(
+"Braund, Mr. Owen Harris" = 22,
+"Cumings, Mrs. John Bradley (Florence Briggs Thayer)" = 38,
+"Heikkinen, Miss. Laina" = 26,
+"Futrelle, Mrs. Jacques Heath (Lily May Peel)" = 35,
+"Allen, Mr. William Henry" = 35,
+"Moran, Mr. James" = NA,
+"McCarthy, Mr. Timothy J" = 54,
+"Palsson, Master. Gosta Leonard" = 2,
+"Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)" = 27,
+"Nasser, Mrs. Nicholas (Adele Achem)" = 14,
+"Sandstrom, Miss. Marguerite Rut" = 4,
+"Bonnell, Miss. Elizabeth" = 58,
+"Saundercock, Mr. William Henry" = 20,
+"Andersson, Mr. Anders Johan" = 39,
+"Vestrom, Miss. Hulda Amanda Adolfina" = 14,
+"Hewlett, Mrs. (Mary D Kingcome)" = 55,
+"Rice, Master. Eugene" = 2,
+"Williams, Mr. Charles Eugene" = NA,
+"Vander Planke, Mrs. Julius (Emelia Maria Vandemoortele)" = 31,
+"Masselmani, Mrs. Fatima" = NA
+)
+
+record <- is.na(snames)
+``` 

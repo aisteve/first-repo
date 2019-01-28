@@ -1,0 +1,49 @@
+---
+title: "Vectors"
+author: "Adediran Ifeoluwa"
+date: "January 28, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Vectors Illustration
+
+Create a vector containing the accident status of the passengers
+Those that survived represent 1 and those that did not survive represent 0
+Assign it to survived object
+And display survived values
+Create survived2 with random survived status of length 20
+Create snames for the passenger of length 20 and their age respectively
+
+```
+survived <- rep(c(0, 1), times = 20)
+survived
+survived2 <- c(0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 1, 0, 0)
+snames <- c(
+"Braund, Mr. Owen Harris" = 22,
+"Cumings, Mrs. John Bradley (Florence Briggs Thayer)" = 38,
+"Heikkinen, Miss. Laina" = 26,
+"Futrelle, Mrs. Jacques Heath (Lily May Peel)" = 35,
+"Allen, Mr. William Henry" = 35,
+"Moran, Mr. James" = NA,
+"McCarthy, Mr. Timothy J" = 54,
+"Palsson, Master. Gosta Leonard" = 2,
+"Johnson, Mrs. Oscar W (Elisabeth Vilhelmina Berg)" = 27,
+"Nasser, Mrs. Nicholas (Adele Achem)" = 14,
+"Sandstrom, Miss. Marguerite Rut" = 4,
+"Bonnell, Miss. Elizabeth" = 58,
+"Saundercock, Mr. William Henry" = 20,
+"Andersson, Mr. Anders Johan" = 39,
+"Vestrom, Miss. Hulda Amanda Adolfina" = 14,
+"Hewlett, Mrs. (Mary D Kingcome)" = 55,
+"Rice, Master. Eugene" = 2,
+"Williams, Mr. Charles Eugene" = NA,
+"Vander Planke, Mrs. Julius (Emelia Maria Vandemoortele)" = 31,
+"Masselmani, Mrs. Fatima" = NA
+)
+
+
+``` 
