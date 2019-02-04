@@ -1,0 +1,122 @@
+---
+title: "Assignment3"
+author: "Adediran Ifeoluwa"
+date: "February 3, 2019"
+output: html_document
+---
+
+## Question 1
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+record <- read.csv("smalldata.csv", header = TRUE) 
+ls(as.environment(record))
+record[1]
+record[2]
+record[, 1]
+record[, 2]
+str(record)
+ncol(record)
+nrow(record)
+list(record)
+
+```
+
+
+## Question 2
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+record <- read.csv("smalldata.csv", header = TRUE)
+myvect1 <- c(colnames(record))
+
+length(myvect1)
+ls(myvect1)
+myvect1[1]
+myvect1[2]
+str(myvect1[2])
+str(myvect1[1]) 
+myvect1[]
+ncol(record) + nrow(record)
+
+```
+
+
+## Question 3
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+record <- read.csv("smalldata.csv", header = TRUE)
+myvect1 <- c(colnames(record))
+ls(myvect1)
+myvect1[1]
+
+y <- record[, 1]
+init <- 0
+for(i in seq_along(y)){
+        init <- init + record[i, 1]
+}
+init
+
+getRow <- nrow(record)
+getMean <- init / getRow
+
+getMean
+
+
+```
+
+
+## Question 4
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+record <- read.csv("smalldata.csv", header = TRUE)
+myvect1 <- c(colnames(record))
+
+str(myvect1) 
+ncol(record) * nrow(record)
+
+getmeandata <- function(elem){ 
+        displMean <- mean(record[, elem], na.rm = TRUE)
+        displMean
+}
+
+args(getmeandata)
+
+getmeandata(1)
+getmeandata(2)
+ 
+
+```
+
+
+
+## Question 5
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+record <- read.csv("smalldata.csv", header = TRUE)
+myvect1 <- c(colnames(record))
+
+getmeandata2 <- function(elt){ 
+        displMean <- mean(record[, elem], na.rm = TRUE)
+        displMean
+}
+
+elem <- 2
+lapply(record, getmeandata2)
+
+newrecord <- na.omit(record[2])
+
+addup <- lapply(newrecord, sum)
+count <- nrow(record[2])
+
+meanCalc <- addup$Age / count
+
+```
