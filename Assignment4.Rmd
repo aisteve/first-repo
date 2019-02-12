@@ -1,0 +1,31 @@
+---
+title: "Assignment 4"
+author: "Adediran Ifeoluwa"
+date: "February 12, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Website Scraping
+
+````
+install.packages("XML", dependencies = TRUE)
+
+library(XML) 
+
+doc <- htmlParse("http://www.espn.com/soccer/table/_/league/uefa.champions")
+doc_root <- xmlRoot(doc)
+xmlSize(doc_root)
+
+xmlSApply(doc_root, xmlName)
+xmlSApply(doc_root, xmlSize)
+doc_body <- xmlChildren(doc_root)$body
+
+table_rec <- xpathSApply(doc_root, "//table")
+xmlSize(table_rec)
+head(table_rec, n = 2)
+
+````
