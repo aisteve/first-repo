@@ -1,0 +1,39 @@
+---
+title: "Assignment 5"
+author: "Adediran Ifeoluwa"
+date: "February 17, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Assignment 5
+
+````
+install.packages("xml2");
+install.packages("rvest");
+install.packages("plyr"); 
+library(xml2);
+library(rvest);
+library (plyr); 
+url <- "https://en.wikipedia.org/wiki/List_of_Presidents_of_the_United_States_by_home_state"; 
+root <- read_html(url);
+rootNode <- html_nodes(root, xpath='//*[@id="mw-content-text"]/div/table[1]');
+listing <- html_table(rootNode);
+president <- listing[[1]]; 
+head(president); 
+
+prst <- as.data.frame(president);
+
+for (i in seq(prst$`Date of birth`)){
+
+prst$age[i] = floor(as.numeric( Sys.Date() - as.Date(prst$`Date of birth`[i], "%b %d, %Y")) / 365.25);
+
+}
+
+head(prst);
+
+
+````
