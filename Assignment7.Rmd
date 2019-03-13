@@ -75,29 +75,40 @@ tempPrst$ageAfterOffice[i] = tempPrst$lastYearInOffice[i] - birth
 ## R Markdown
  
 ## Including Plots 
+ 
 
-```{r tempPrst, echo=FALSE}
+```{echo=FALSE}
 
-str(tempPrst)
-class(tempPrst$ageBeforeOffice)
-class(tempPrst$ageAfterOffice)
+p1 <- ggplot(tempPrst, aes(ageBeforeOffice, ageAfterOffice)) 
+p1 <- p1 + geom_point() 
+p1 <- p1 + geom_smooth(method='lm') 
+p1 <- p1 + ggtitle("Analysis on President Age Group") 
+p1 <- p1 + labs(x = 'Age Before Office', y= 'Age After Office')
 
-p1 <- ggplot(tempPrst, aes(ageBeforeOffice, ageAfterOffice)) + geom_point() + geom_smooth(method='lm') + ggtitle("Analysis on President Age Group") + labs(x = 'Age Before Office', y= 'Age After Office')
+str(p1)
+class(p1)
+length(p1)
+summary(p1)
+p1 + coord_fixed(ratio = 1/2)
 
-p2 <- ggplot(tempPrst, aes(ageBeforeOffice, ageAfterOffice, color = party)) + geom_point() + geom_smooth(method='lm', se = FALSE, na.rm=TRUE) + ggtitle("Analysis on President Age Group of different parties") + labs(x = 'Age Before Office', y= 'Age After Office') + facet_wrap( ~ party)
 
-p3 <- qplot(ageAfterOffice, ageBeforeOffice, data = tempPrst, color = "green", main = 'Analysis on President Age Group')
 
-prst <- tempPrst
+```
 
-p3 <- p3 + xlab('Age After Office') + ylab('Age Before Office')
 
-p1
+```{echo=FALSE}
+ 
+p2 <- ggplot(tempPrst, aes(ageBeforeOffice, ageAfterOffice, color = party)) 
+p2 <- p2 + geom_point() 
+p2 <- p2 + geom_smooth(method='lm', se = FALSE, na.rm=TRUE) 
+p2 <- p2 + ggtitle("Analysis on President Age Group of different parties") 
+p2 <- p2 + labs(x = 'Age Before Office', y= 'Age After Office') 
+p2 <- p2 + facet_wrap( ~ party)
 
-p2
-
-p3
-
+str(p2)
+class(p2)
+length(p2)
+p2 + coord_quickmap()
 
 
 ```
