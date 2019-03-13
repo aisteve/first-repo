@@ -1,0 +1,103 @@
+---
+title: "Assignment 7"
+author: "Adediran Ifeoluwa"
+date: "March 12, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+install.packages("xml2");
+install.packages("rvest");
+install.packages("plyr"); 
+install.packages("ggplot2")
+library(ggplot2);
+library(xml2);
+library(rvest);
+library (plyr); 
+url <- "https://en.wikipedia.org/wiki/List_of_Presidents_of_the_United_States_by_home_state"; 
+root <- read_html(url);
+rootNode <- html_nodes(root, xpath='//*[@id="mw-content-text"]/div/table[1]');
+listing <- html_table(rootNode, fill = TRUE);
+president <- listing[[1]]; 
+head(president); 
+prst <- as.data.frame(president);
+for (i in seq(prst$`Date of birth`)){
+prst$age[i] = floor(as.numeric( Sys.Date() - as.Date(prst$`Date of birth`[i], "%b %d, %Y")) / 365.25);
+}
+
+firstYear <- c("1789", "1797", "1801", "1809", "1817", "1829", "1825", "1841", "1837", "1849", "1841", "1857", "1845", "1850", "1853", "1865", "1861", "1869", "1877", "1881", "1881", "1889", "1885", "1893", "1897",  "1913", "1909", "1901", "1921", "1923", "1929", "1933", "1945", "1953", "1963", "1981", "1969", "1974", "1961", "1989", "1977", "2017", "2001", "1993", "2009")
+
+tempPrst <- prst
+tempPrst <- tempPrst[-c(46),]
+tempPrst <- tempPrst[order(firstYear), ]
+
+
+party <- c("Unaffiliated", "Federalist", "Democratic-Republican", "Democratic-Republican", "Democratic-Republican", "Democratic-Republican", "Democratic", "Democratic", "Whig", "Unaffiliated", "Democratic", "Whig", "Whig", "Democratic", "Democratic", "Republican", "Democratic", "Republican", "Republican", "Republican", "Republican", "Democratic", "Republican", "Democratic", "Republican", "Republican", "Republican", "Democratic", "Republican", "Republican", "Republican", "Democratic", "Democratic", "Republican", "Democratic", "Democratic", "Republican", "Republican", "Democratic", "Republican", "Republican", "Democratic", "Republican", "Democratic", "Republican")
+
+party_factor <-factor(party)
+ 
+tempPrst$party = party_factor 
+
+tempPrst$firstYearInOffice <- c("1789", "1797", "1801", "1809", "1817", "1825", "1829", "1837", "1841", "1841", "1845", "1849", "1850", "1853", "1857", "1861", "1865", "1869", "1877", "1881", "1881", "1885", "1889", "1893", "1897", "1901", "1909", "1913", "1921", "1923", "1929", "1933", "1945", "1953", "1961", "1963", "1969", "1974", "1977", "1981", "1989", "1993", "2001", "2009", "2017")
+
+tempPrst$lastYearInOffice <- c("1797", "1801", "1809", "1817", "1825", "1829", "1837", "1841", "1841", "1845", "1849", "1850", "1853", "1857", "1861", "1865", "1869", "1877", "1881", "1885", "1881", "1889", "1893", "1897", "1901", "1909", "1913", "1921", "1923", "1929", "1933", "1945", "1953", "1961", "1963", "1969", "1974", "1977", "1981", "1989", "1993", "2001", "2009", "2017", "Incumbent")
+
+tempPrst$lastYearInOffice <- as.numeric(tempPrst$lastYearInOffice)
+tempPrst$firstYearInOffice <- as.numeric(tempPrst$firstYearInOffice)
+
+tempPrst$lastYearInOffice[45] <- as.numeric("2019")
+
+
+for (i in seq(tempPrst$`Date of birth`)){
+
+birth <- substr(as.Date(tempPrst$`Date of birth`[i], "%b %d, %Y"), 1, 4)
+birth <- as.numeric(birth)
+
+tempPrst$ageBeforeOffice[i] = tempPrst$firstYearInOffice[i] - birth
+
+}
+
+for (i in seq(tempPrst$`Date of birth`)){
+
+birth <- substr(as.Date(tempPrst$`Date of birth`[i], "%b %d, %Y"), 1, 4)
+birth <- as.numeric(birth)
+
+tempPrst$ageAfterOffice[i] = tempPrst$lastYearInOffice[i] - birth
+
+}
+
+
+
+```
+
+## R Markdown
+ 
+## Including Plots 
+
+```{r tempPrst, echo=FALSE}
+
+str(tempPrst)
+class(tempPrst$ageBeforeOffice)
+class(tempPrst$ageAfterOffice)
+
+p1 <- ggplot(tempPrst, aes(ageBeforeOffice, ageAfterOffice)) + geom_point() + geom_smooth(method='lm') + ggtitle("Analysis on President Age Group") + labs(x = 'Age Before Office', y= 'Age After Office')
+
+p2 <- ggplot(tempPrst, aes(ageBeforeOffice, ageAfterOffice, color = party)) + geom_point() + geom_smooth(method='lm', se = FALSE, na.rm=TRUE) + ggtitle("Analysis on President Age Group of different parties") + labs(x = 'Age Before Office', y= 'Age After Office') + facet_wrap( ~ party)
+
+p3 <- qplot(ageAfterOffice, ageBeforeOffice, data = tempPrst, color = "green", main = 'Analysis on President Age Group')
+
+prst <- tempPrst
+
+p3 <- p3 + xlab('Age After Office') + ylab('Age Before Office')
+
+p1
+
+p2
+
+p3
+
+
+
+```
