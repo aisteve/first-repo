@@ -13,6 +13,13 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 BiocManager::install("impute", version = "3.8")
 
+url <- "https://www.pewinternet.org/fact-sheet/social-media"
+sc <- read_html(url)
+
+table <- sc %>%
+    html_nodes("table") %>%
+    html_table(header=T)
+
 record <- table[[4]][,c(2, 3)]
 record$Men = as.numeric(gsub("[\\%,]", "", record$Men))
 record$Women = as.numeric(gsub("[\\%,]", "", record$Women))
@@ -32,9 +39,7 @@ kmeansObj$cluster
 Social Media Usage By Gender (2005 - 2018)
  
 
-## Including Plots
-
-You can also embed plots, for example:
+## Including Plots 
 
 ```{r pressure, echo=FALSE}
 plot(record$Men, record$Women, xlab='Men', ylab='Women', col=kmeansObj$cluster, pch=19, cex=2, main='Social Media Usage By Gender (2005 - 2018)') 
