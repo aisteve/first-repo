@@ -1,0 +1,43 @@
+---
+title: "Assignment 8"
+author: "Adediran Ifeoluwa"
+date: "March 25, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rvest)
+library(xml2)
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("impute", version = "3.8")
+
+record <- table[[4]][,c(2, 3)]
+record$Men = as.numeric(gsub("[\\%,]", "", record$Men))
+record$Women = as.numeric(gsub("[\\%,]", "", record$Women))
+
+plot(record$Men, record$Women, col="blue", pch=19)
+
+plot(record$Men, record$Women, col="blue", pch=19)
+dataFrame <- data.frame(record$Men, record$Women)
+kmeansObj <- kmeans(dataFrame, centers = 3)
+names(kmeansObj)
+
+kmeansObj$cluster
+```
+
+## K-Means Clustering
+
+Social Media Usage By Gender (2005 - 2018)
+ 
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(record$Men, record$Women, xlab='Men', ylab='Women', col=kmeansObj$cluster, pch=19, cex=2, main='Social Media Usage By Gender (2005 - 2018)') 
+points(kmeansObj$centers, col=1:3, pch=3, cex=3, lwd=3) 
+```
+ 
