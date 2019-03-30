@@ -97,7 +97,7 @@ fit2 <- lm(y ~ I(x - mean(x)), data=record)
 coef(fit2)
 ```
 
-## The intercept 2.85 is the expected value for the average of the data (0.2042)
+## The intercept 2.85 is the expected value for the average of the data
 
 ```{r}
 fit3 <- lm(y ~ I(x * 10), data = diamond)
