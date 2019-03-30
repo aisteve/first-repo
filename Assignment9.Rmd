@@ -1,0 +1,120 @@
+---
+title: "Assignment9"
+author: "Adediran Ifeoluwa"
+date: "March 30, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(xml2)
+library(rvest)
+library(stringr)
+library(ggplot2)
+
+url <- "https://www.ons.gov.uk/employmentandlabourmarket/peopleinwork/earningsandworkinghours/timeseries/kac3/lms"
+sc <- read_html(url)
+
+table <- sc %>%
+    html_nodes("table") %>%
+    html_table(header=T)
+	
+record <- table[[2]]
+n <- length(record$Period) 
+
+revamp <- gsub("\\s+", "/", record$Period) 
+
+for (i in 1 : n){
+    concat  = toString(paste(revamp[i], "/01", sep=""));
+	io = as.Date(concat, format="%Y/%b/%d");
+	year = format(io, "%Y")
+	month = format(io, "%m") 
+	record$numericDate[i] = paste(year, month, sep="")
+    print(record$numericDate[i])
+}
+ 
+record$numericDate <- as.numeric(record$numericDate);
+y <- as.numeric(record$Value)
+x <- as.numeric(record$numericDate)
+
+
+```
+
+## R Markdown 
+
+```{r}
+
+fit <- lm(y ~ x)
+e <- resid(fit)
+yhat <- predict(fit)
+
+max(abs(e - (y - yhat)))
+
+sum(e)
+sum(e * x)
+
+summary(fit)
+
+summary(fit)$sigma
+sqrt(sum(resid(fit) ^ 2)/(n-2))
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+
+plot(x, y, xlab = "Date(YYYYDD)", ylab = "Value", bg="lightblue", main="Labour Market Statistics SA AWE total pay WE growth year on year 3 months average", col="black", cex=1.1, pch=21, frame=FALSE)
+abline(fit, lwd=2) 
+for(i in 1: n)
+	lines(c(x[i], x[i]), c(y[i], yhat[i]), col="red", lwd=2)
+
+```
+ 
+ 
+```{r, echo=FALSE}
+
+plot(x, e, xlab = "Date(YYYYDD)", ylab = "Residual(Value)", main="Labour Market Statistics SA AWE total pay WE growth year on year 3 months average", bg="lightblue", col="black", cex=2, pch=21, frame=FALSE)
+abline(h=0, lwd=2) 
+for(i in 1: n)
+	lines(c(x[i], x[i]), c(e[i], 0), col="red", lwd=2)
+
+```
+
+
+## Residual standard error: 1.289 on 213 degrees of freedom
+
+```{r}
+coef(fit)
+```
+## The intercept 324.51 is the expected value of a null Date
+
+```{r}
+fit2 <- lm(y ~ I(x - mean(x)), data=record)
+coef(fit2)
+```
+
+## The intercept 2.85 is the expected value for the average of the data (0.2042)
+
+```{r}
+fit3 <- lm(y ~ I(x * 10), data = diamond)
+coef(fit3)
+```
+
+## The intercept 324.51 is the expected value for the average of the data
+
+## Predicting the price of a diamond
+
+```{r}
+new <- c(201902, 201903, 201904, 201905)
+coef(fit)[1] + coef(fit)[2] * new
+predict(fit, newdata=data.frame(x=new))
+```
+
+## Prediction
+---
+1.353418 1.351818 1.350217 1.348617
+---
